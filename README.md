@@ -1,6 +1,7 @@
 # medium-articles
 Code used to obtain results for my Medium articles - 
 <a href="https://medium.com/@conorosully" target="_blank"> medium@conorosully</a>
+[go](https://medium.com/@conorosully){:target="_blank"}
 
 <table>
   <tr>
