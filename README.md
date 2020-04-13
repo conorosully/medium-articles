@@ -9,7 +9,7 @@ Code used to obtain results for my Medium articles - [medium@conorosully](https:
   </tr>
   <tr>
     <td>The Power of Feature Engineering</td>
-    <td>feature_engineering.py</td>
+    <td>feature_engineering.ipynb</td>
     <td>Compare the performance of logistic regression to a DNN Classifier on a non-linear dataset</td>
   </tr>
   
