@@ -15,7 +15,7 @@ Code used to obtain results for my Medium articles - [medium@conorosully](https:
   
   <tr>
     <td> <a href="https://medium.com/p/54f5273f640/edit"> Visualising the Classification Power of Data </a></td>
-    <td>PCA.py</td>
+    <td>pca_visualisation.ipynb</td>
     <td>Using PCA to explore how well your data can separate classes</td>
   </tr>
   
