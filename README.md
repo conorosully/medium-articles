@@ -7,10 +7,17 @@ Code used to obtain results for my Medium articles - [medium@conorosully](https:
     <th><span style="font-weight:bold">Code</span></th>
     <th><span style="font-weight:bold">Description</span></th>
   </tr>
+  
   <tr>
     <td><a href="https://medium.com/@conorosully/the-power-of-feature-engineering-b6f3bb7de39c"> The Power of Feature Engineering </a></td>
     <td>feature_engineering.ipynb</td>
     <td>Compare the performance of logistic regression to a NN Classifier on a non-linear dataset</td>
+  </tr>
+  
+  <tr>
+    <td><a href="https://medium.com/@conorosully"> Identifying Restaurant Hotspots with a Gaussian Mixture Model </a></td>
+    <td>gmm_restaurant.ipynb</td>
+    <td>Using a GMM to identify intuitive restaurant clusters in Toronto, Canada</td>
   </tr>
   
   <tr>
