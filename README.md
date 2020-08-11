@@ -15,13 +15,13 @@ Code used to obtain results for my Medium articles - [medium@conorosully](https:
   </tr>
   
   <tr>
-    <td><a href="https://medium.com/@conorosully"> Identifying Restaurant Hotspots with a Gaussian Mixture Model </a></td>
+    <td><a href="https://towardsdatascience.com/identifying-restaurant-hotspots-with-a-gaussian-mixture-model-2a840ab0c782"> Identifying Restaurant Hotspots with a Gaussian Mixture Model </a></td>
     <td>gmm_restaurant.ipynb</td>
     <td>Using a GMM to identify intuitive restaurant clusters in Toronto, Canada</td>
   </tr>
   
   <tr>
-    <td> Coming Soon</td>
+    <td><a href="https://towardsdatascience.com/visualising-the-classification-power-of-data-54f5273f640"> Visualising the Classification Power of Data using PCA </a></td>
     <td>pca_visualisation.ipynb</td>
     <td>Using PCA to explore how well your data can separate classes</td>
   </tr>
