@@ -26,12 +26,13 @@ Code used to obtain results for my Medium articles - [medium@conorosully](https:
     <td>Using PCA to explore how well your data can separate classes</td>
   </tr>
   
-    <tr>
+   <tr>
     <td><a href="https://medium.com/@conorosully/deep-neural-network-language-identification-ae1c158f6a7d"> Deep Neural Network Language Identification </a></td>
     <td>language_classification.ipynb</td>
     <td>Classifying the language of a piece of text using a DNN and character n-grams</td>
   </tr>
   
+   
   
 </table>
 
