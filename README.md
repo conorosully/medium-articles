@@ -1,5 +1,5 @@
 # medium-articles
-Code used to obtain results for my Medium articles - [medium@conorosully](https://medium.com/@conorosully)
+Code used to obtain results for my Medium articles - [medium@conorosullyDS](https://medium.com/@conorosullyDS)
 
 <table>
   <tr>
