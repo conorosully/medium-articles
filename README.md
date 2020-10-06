@@ -1,5 +1,5 @@
 # medium-articles
-Code used to obtain results for my Medium articles - [medium@conorosully](https://medium.com/@conorosully)
+Code used to obtain results for my Medium articles - [medium@conorosullyDS](https://medium.com/@conorosullyDS)
 
 <table>
   <tr>
@@ -30,6 +30,12 @@ Code used to obtain results for my Medium articles - [medium@conorosully](https:
     <td><a href="https://medium.com/@conorosully/deep-neural-network-language-identification-ae1c158f6a7d"> Deep Neural Network Language Identification </a></td>
     <td>language_classification.ipynb</td>
     <td>Classifying the language of a piece of text using a DNN and character n-grams</td>
+  </tr>
+  
+   <tr>
+    <td><a href="https://medium.com/@conorosully/deep-neural-network-language-identification-ae1c158f6a7d"> Too Many Terms Ruins the Regression </a></td>
+    <td>polynomial_regression_overfitting.ipynb</td>
+    <td>Overfitting with polynomial regression and how to avoid it</td>
   </tr>
   
    
