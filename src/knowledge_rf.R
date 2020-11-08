@@ -42,11 +42,14 @@ y_pred = predict(rf_classifier, newdata = test_set[-24])
 accuracy = round(sum(y_pred == y_true)/length(y_pred),2)
 accuracy 
 
-
+#Variable importance
 importance(rf_classifier,type=1)
-varImpPlot(rf_classifier,type=1)
+importance(rf_classifier,type=2)
 
+varImpPlot(rf_classifier,type=1)
 varImpPlot(rf_classifier,type=2)
+
+
 
 # ======================
 # Logistic Regression 
