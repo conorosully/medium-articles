@@ -33,13 +33,13 @@ Code used to obtain results for my Medium articles - [medium@conorosullyDS](http
   </tr>
   
    <tr>
-    <td><a href="https://medium.com/@conorosully/deep-neural-network-language-identification-ae1c158f6a7d"> Too Many Terms Ruins the Regression </a></td>
+    <td><a href="https://towardsdatascience.com/too-many-terms-ruins-the-regression-7cf533a0c612"> Too Many Terms Ruins the Regression </a></td>
     <td>polynomial_regression_overfitting.ipynb</td>
     <td>Overfitting with polynomial regression and how to avoid it</td>
   </tr>
   
    <tr>
-    <td><a href="https://medium.com/@conorosullyDS"> US Election Choropleth with Python </a></td>
+    <td><a href="https://towardsdatascience.com/us-election-choropleth-with-python-bad8e355f1bd"> US Election Choropleth with Python </a></td>
     <td>US_election_map.ipynb</td>
     <td>Creating time-series choropleths of US election results</td>
   </tr>
