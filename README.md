@@ -38,6 +38,12 @@ Code used to obtain results for my Medium articles - [medium@conorosullyDS](http
     <td>Overfitting with polynomial regression and how to avoid it</td>
   </tr>
   
+   <tr>
+    <td><a href="https://medium.com/@conorosullyDS"> US Election Choropleth with Python </a></td>
+    <td>US_election_map.ipynb</td>
+    <td>Creating time-series choropleths of US election results</td>
+  </tr>
+  
    
   
 </table>
