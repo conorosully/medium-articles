@@ -44,6 +44,13 @@ Code used to obtain results for my Medium articles - [medium@conorosullyDS](http
     <td>Creating time-series choropleths of US election results</td>
   </tr>
   
+  <tr>
+    <td><a href="https://towardsdatascience.com/finding-and-visualising-interactions-14d54a69da7c"> Finding and Visualising Interactions </a></td>
+    <td>interactions.R</td>
+    <td>Analysing interactions using feature importance, Friedman’s H-statistic and ICE Plots</td>
+  </tr>
+  
+  
    
   
 </table>
