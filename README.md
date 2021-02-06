@@ -50,6 +50,12 @@ Code used to obtain results for my Medium articles - [medium@conorosullyDS](http
     <td>Analysing interactions using feature importance, Friedman’s H-statistic and ICE Plots</td>
   </tr>
   
+  <tr>
+    <td><a href=""> Introduction to Sentiment Analysis </a></td>
+    <td>sentiment_analysis.ipynb</td>
+    <td>Creating your first sentiment analysis model with Python</td>
+  </tr>
+  
   
    
   
