@@ -51,10 +51,17 @@ Code used to obtain results for my Medium articles - [medium@conorosullyDS](http
   </tr>
   
   <tr>
-    <td><a href=""> Introduction to Sentiment Analysis </a></td>
+    <td><a href="https://towardsdatascience.com/introduction-to-sentiment-analysis-f623f7d40bfa"> Introduction to Sentiment Analysis </a></td>
     <td>sentiment_analysis.ipynb</td>
     <td>Creating your first sentiment analysis model with Python</td>
   </tr>
+  
+  <tr>
+    <td><a href="https://towardsdatascience.com/finding-and-visualising-non-linear-relationships-4ecd63a43e7e"> Finding and Visualising Non-Linear Relationships </a></td>
+    <td>nonlinear_relationships.R</td>
+    <td>Analysing non-linear relationships with partial dependence plots (PDPs), mutual information and feature importance</td>
+  </tr>
+  
   
   
    
