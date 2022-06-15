@@ -3,12 +3,7 @@
 # 06 June 2022
 
 #To do 
-# Feature iportance
-# 2x PDP
-# PDP for binary target vairiable 
-# rug plot distribution
-
-# d ice for 1 plot
+# Feature importance
 
 
 # ======================
@@ -19,7 +14,7 @@
 setwd("~/Documents/git/medium-articles/data")
 dataset = read.csv('PDP_ICE.csv',sep = "\t")
 
-#dataset$car_type = factor(dataset$car_type, levels = c(0, 1))
+dataset$car_type = factor(dataset$car_type, levels = c(0, 1))
 
 owner_age  = dataset$owner_age  
 km_driven = dataset$km_driven
@@ -28,13 +23,24 @@ repairs = dataset$repairs
 car_type = dataset$car_type
 price = dataset$price
 
+setwd("~/Google Drive/My Drive/Medium/PDP and ICE Plots/R")
 
+# ======================
+# Random Forest
+# ======================
+library(randomForest)
+set.seed(123)
 
+# Train model on entire set
+rf = randomForest(x = dataset[0:5],
+                  y = dataset$price,
+                  ntree = 100,
+                  importance=TRUE)
 
 # ======================
 # Scatter Plots
 # ======================
-setwd("~/Google Drive/My Drive/Medium/PDP and ICE Plots/R")
+
 library(ggplot2)
 library("gridExtra")
 
@@ -65,19 +71,6 @@ cor(car_age, km_driven)
 jpeg('correlation.jpg',width = 1000, height = 600, res=150)
 ggplot(dataset, aes(x=car_age, km_driven)) + geom_point(color='#00BFC4')
 dev.off()
-
-
-# ======================
-# Random Forest
-# ======================
-library(randomForest)
-set.seed(123)
-
-# Train model on entire set
-rf = randomForest(x = dataset[0:5],
-                  y = dataset$price,
-                  ntree = 100,
-                  importance=TRUE)
 
 
 # ======================
@@ -156,36 +149,88 @@ plot(iceplot, frac_to_plot = 1, centered = F, prop_range_y = TRUE,
      x_quantile = F, plot_orig_pts_preds = F,colorvec = '000000')
 dev.off()
 
+
 jpeg('car_type_dpd.jpg',width = 1000, height = 600, res=150)
-iceplot = ice(object = rf, X = dataset[0:5], y = dataset$price, predictor = "car_type")
-plot(iceplot, frac_to_plot = 1, centered = F, prop_range_y = TRUE,
-     x_quantile = F, plot_orig_pts_preds = F,colorvec = '000000')
+mod <- Predictor$new(rf, data = dataset)
+eff <- FeatureEffect$new(mod, feature = "car_type", method = "pdp")
+plot(eff)
 dev.off()
 
+# ======================
+# rug plot 
+# ======================
 
-
+jpeg('km_driven_dpd_2.jpg',width = 1000, height = 600, res=150)
+mod <- Predictor$new(rf, data = dataset)
+eff <- FeatureEffect$new(mod, feature = "km_driven", method = "pdp")
+plot(eff)
+dev.off()
 
 # ======================
 # Binary target variable 
 # ======================
 
+mean_price = mean(dataset$price)
+price_binary = as.integer(dataset$price > mean_price)
+price_binary = factor(price_binary, levels = c(0, 1))
 
+# Train model on entire set
+rf_binary = randomForest(x = dataset[0:5],
+                  y = price_binary,
+                  ntree = 100,
+                  importance=TRUE)
 
-# ======================
-# Feature importance
-# ======================
+# car_age
+jpeg('binary_dpd.jpg',width = 1000, height = 600, res=150)
+iceplot = ice(object = rf_binary, 
+              X = dataset[0:5], 
+              predictor = "car_age",
+              predictfcn = function(object, newdata){
+                      predict(object, newdata, type = "prob")[, 2]
+              })
+plot(iceplot, 
+     frac_to_plot = 1, 
+     centered = F, 
+     prop_range_y = TRUE, 
+     plot_orig_pts_preds = F,
+     colorvec = '000000')
+dev.off()
 
 
 # ======================
 # 2 Features
 # ======================
 
+jpeg('2_factor_dpd.jpg',width = 1000, height = 600, res=150)
+mod <- Predictor$new(rf, data = dataset)
+eff <- FeatureEffect$new(mod, feature = c("car_age","km_driven"), method = "pdp")
+plot(eff)
+dev.off()
 
 # ======================
-# Derivative 
+# Feature importance
+# ======================
+library(vip)
+jpeg('vi_pdp.jpg',width = 1000, height = 600, res=150)
+vip(rf, method = "firm")
+dev.off()
+
+jpeg('vi_ice.jpg',width = 1000, height = 600, res=150)
+vip(rf, method = "firm",ice = TRUE)
+dev.off()
+
+vi(rf, method = "firm")
+vi(rf, method = "firm",ice = TRUE)
+
+# ======================
+# Derivative PDP
 # ======================
 
-
+jpeg('derivative_dpd.jpg',width = 1000, height = 600, res=150)
+iceplot = ice(object = rf, X = dataset[0:5], y = dataset$price, predictor = "repairs")
+dice = dice(iceplot)
+plot(dice,x_quantile = F,plot_orig_pts_deriv = F,colorvec = '000000',plot_sd=F)
+dev.off()
 
 
 # ======================
@@ -221,6 +266,20 @@ plot(iceplot, frac_to_plot = 0.1, centered = T, prop_range_y = TRUE,
      x_quantile = F, plot_orig_pts_preds = F, color_by = "car_type")
 dev.off()
 
+# car_age:car_type
+jpeg('car_age_ice_cover.jpg',width = 1500, height = 1300, res=300)
+iceplot = ice(object = rf, X = dataset[0:5], y = dataset$price, predictor = "car_age")
+plot(iceplot, frac_to_plot = 0.1, centered = T, prop_range_y = TRUE,
+     x_quantile = F, plot_orig_pts_preds = F, color_by = "car_type")
+dev.off()
+
+
+# car_age:car_type
+jpeg('derivative_ice.jpg',width = 1000, height = 600, res=150)
+iceplot = ice(object = rf, X = dataset[0:5], y = dataset$price, predictor = "car_age")
+dice = dice(iceplot)
+plot(dice,frac_to_plot = 0.1,x_quantile = F,plot_orig_pts_deriv = F,color_by = "car_type", plot_sd=F)
+dev.off()
 
 
 
