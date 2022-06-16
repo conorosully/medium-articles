@@ -1,10 +1,6 @@
-# Charts PDPs and ICE Plots and Explanations
+# Charts for PDPs and ICE Plots and Explanations
 # Conor O'Sullivan
 # 06 June 2022
-
-#To do 
-# Feature importance
-
 
 # ======================
 # Importing Dataset
@@ -200,7 +196,6 @@ dev.off()
 # ======================
 # 2 Features
 # ======================
-
 jpeg('2_factor_dpd.jpg',width = 1000, height = 600, res=150)
 mod <- Predictor$new(rf, data = dataset)
 eff <- FeatureEffect$new(mod, feature = c("car_age","km_driven"), method = "pdp")
@@ -219,8 +214,6 @@ jpeg('vi_ice.jpg',width = 1000, height = 600, res=150)
 vip(rf, method = "firm",ice = TRUE)
 dev.off()
 
-vi(rf, method = "firm")
-vi(rf, method = "firm",ice = TRUE)
 
 # ======================
 # Derivative PDP
