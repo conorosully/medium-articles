@@ -1,89 +1,158 @@
-# We train a random forest on the Boston dataset:
-data("Boston", package = "MASS")
-library("rpart")
-library("iml")
+# PDPs and ICE Plots
+# Conor O'Sullivan
+# 16 June 2022
 
-rf <- rpart(medv ~ ., data = Boston)
+# ======================
+# Importing dataset
+# ======================
+
+# NOTE: To create dataset, see "PDP_ICE_data.R" 
+setwd("~/Documents/git/medium-articles/data")
+
+dataset = read.csv('PDP_ICE.csv',sep = "\t")
+dataset$car_type = factor(dataset$car_type, levels = c(0, 1))
+
+setwd("~/Google Drive/My Drive/Medium/PDP and ICE Plots/R")
+
+# ======================
+# Training models
+# ======================
+library(randomForest)
+
+# Continuous target variable 
+rf = randomForest(x = dataset[0:5],
+                  y = dataset$price,
+                  ntree = 100)
+
+#Binary target variable 
+#Create binary target variable 
+mean_price = mean(dataset$price)
+price_binary = as.integer(dataset$price > mean_price)
+price_binary = factor(price_binary, levels = c(0, 1))
+
+# Train model
+rf_binary = randomForest(x = dataset[0:5],
+                         y = price_binary,
+                         ntree = 100)
 
 
+# ======================
+# Package - ICEbox
+# ======================
 
+require(ICEbox)
 
+#PDP
+iceplot = ice(object = rf, 
+              X = dataset[0:5], 
+              y = dataset$price, 
+              predictor = "car_age")
+jpeg('R_code_1.jpg',width = 800, height = 600, res=150)
+plot(iceplot, 
+     plot_orig_pts_preds = F,
+     colorvec = '000000')
+dev.off()
 
+#ICE Plot
+jpeg('R_code_2.jpg',width = 800, height = 600, res=150)
+plot(iceplot, 
+     frac_to_plot = 0.1, 
+     centered = T, 
+     plot_orig_pts_preds = F, 
+     color_by = "car_type")
+dev.off()
 
-# Compute the accumulated local effects for the first feature
-eff <- FeatureEffect$new(mod, feature = "rm", grid.size = 30)
-eff$plot()
+#Derivative PDP
+iceplot = ice(object = rf, 
+              X = dataset[0:5], 
+              y = dataset$price, 
+              predictor = "repairs")
+dice = dice(iceplot)
 
+jpeg('R_code_3.jpg',width = 800, height = 600, res=150)
+plot(dice,x_quantile = F,
+     plot_orig_pts_deriv = F,
+     colorvec = '000000',
+     plot_sd=F)
+dev.off()
 
-# Again, but this time with a partial dependence plot and ice curves
+#Binary target variable 
+iceplot = ice(object = rf_binary, 
+              X = dataset[0:5], 
+              predictor = "car_age",
+              predictfcn = function(object, newdata){
+                predict(object, newdata, type = "prob")[, 2]
+              })
 
-mod <- Predictor$new(rf, data = Boston)
+jpeg('R_code_4.jpg',width = 800, height = 600, res=150)
+plot(iceplot, 
+     plot_orig_pts_preds = F,
+     colorvec = '000000')
+dev.off()
 
-eff <- FeatureEffect$new(mod,
-                         feature = "rm", method = "pdp+ice",
-                         grid.size = 30
-)
+# ======================
+# Package - iml
+# ======================
+require(iml)
+
+pred <- Predictor$new(rf, data = dataset)
+
+jpeg('R_code_5.jpg',width = 800, height = 600, res=150)
+eff <- FeatureEffect$new(pred, 
+                         feature = "car_age", 
+                         method = "pdp")
 plot(eff)
+dev.off()
 
+jpeg('R_code_6.jpg',width = 800, height = 600, res=150)
+eff <- FeatureEffect$new(pred, 
+                         feature = "car_age", 
+                         method = "pdp+ice",
+                         center.at = 0)
+plot(eff)
+dev.off()
 
-# We train a random forest on the Boston dataset:
-library("rpart")
-data("Boston", package = "MASS")
-rf <- rpart(medv ~ ., data = Boston)
-mod <- Predictor$new(rf, data = Boston)
-# Compute the accumulated local effects for all features
-eff <- FeatureEffects$new(mod)
-eff$plot()
-## Not run:
-# Again, but this time with a partial dependence plot
-eff <- FeatureEffects$new(mod, method = "pdp")
-eff$plot()
+jpeg('R_code_7.jpg',width = 800, height = 600, res=150)
+eff <- FeatureEffect$new(pred, 
+                         feature = "car_type", 
+                         method = "pdp")
+plot(eff)
+dev.off()
 
+jpeg('R_code_8.jpg',width = 800, height = 600, res=150)
+eff <- FeatureEffect$new(pred, 
+                         feature = "car_type", 
+                         method = "ice")
+plot(eff)
+dev.off()
 
+jpeg('R_code_9.jpg',width = 800, height = 600, res=150)
+eff <- FeatureEffect$new(pred, 
+                         feature = c("car_age","km_driven"), 
+                         method = "pdp")
+plot(eff)
+dev.off()
 
-# Load the sample data
-data(mtcars)
+jpeg('R_code_10.jpg',width = 1200, height = 600, res=150)
+pred <- Predictor$new(rf_binary, data = dataset)
+eff <- FeatureEffect$new(pred, 
+                         feature = "car_age", 
+                         method = "pdp")
+plot(eff)
+dev.off()
 
-# Fit a projection pursuit regression model
-model <- ppr(mpg ~ ., data = mtcars, nterms = 1)
+# ======================
+# Package - vip
+# ======================
 
-# Construct variable importance plot
-vip(model, method = "permute",train = dataset, target = "price",metric = "rmse",pred_wrapper = pfun, geom = "boxplot",
-    all_permutations = TRUE, mapping = aes_string(fill = "Variable"),
-    aesthetics = list(color = "grey35", size = 0.8))
+library(vip)
 
+jpeg('R_code_11.jpg',width = 800, height = 600, res=150)
+vip(rf, method = "firm")
+dev.off()
 
-
-
-install.packages("mlbench")
-
-
-set.seed(101)  # for reproducibility
-trn <- as.data.frame(mlbench::mlbench.friedman1(500))  # ?mlbench.friedman1
-
-# Inspect data
-tibble::as.tibble(trn)
-
-
-# Load required packages
-library(pdp)
-
-# Fit a PPR model (nterms was chosen using the caret package with 5 repeats of 
-# 5-fold cross-validation)
-pp <- ppr(y ~ ., data = trn, nterms = 11)  
-
-# PDPs for all 10 features
-features <- paste0("x.", 1:10)
-pdps <- lapply(features, FUN = function(feature) {
-  pd <- partial(pp, pred.var = feature)
-  autoplot(pd) + 
-    ylim(range(trn$y)) + 
-    theme_light()
-})
-grid.arrange(grobs = pdps, ncol = 5)
-
-
+jpeg('R_code_12.jpg',width = 800, height = 600, res=150)
 vip(rf, method = "firm",ice = TRUE)
-
+dev.off()
 
 
