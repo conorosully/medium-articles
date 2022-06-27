@@ -6,7 +6,7 @@
 # Importing dataset
 # ======================
 
-# NOTE: To create dataset, see "PDP_ICE_data.R" 
+# You can find this dataset here: https://www.kaggle.com/datasets/conorsully1/pdp-and-ice-plots/settings
 setwd("~/Documents/git/medium-articles/data")
 
 dataset = read.csv('PDP_ICE.csv',sep = "\t")
@@ -70,7 +70,7 @@ iceplot = ice(object = rf,
 dice = dice(iceplot)
 
 jpeg('R_code_3.jpg',width = 800, height = 600, res=150)
-plot(dice,x_quantile = F,
+plot(dice,
      plot_orig_pts_deriv = F,
      colorvec = '000000',
      plot_sd=F)
@@ -146,9 +146,11 @@ dev.off()
 # ======================
 
 library(vip)
+packageVersion(vip) 
+sessionInfo()
 
 jpeg('R_code_11.jpg',width = 800, height = 600, res=150)
-vip(rf, method = "firm")
+vip(rf, method = "firm",ice = TRUE)
 dev.off()
 
 jpeg('R_code_12.jpg',width = 800, height = 600, res=150)
